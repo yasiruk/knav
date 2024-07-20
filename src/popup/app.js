@@ -17,7 +17,6 @@ text.addEventListener('keyup', (e) => {
         // select all text in the target input
         text.select()
     }
-    const s = sendToTab({action, text: e.target.value})
-    p.append(`${e.target.value}`)
-    p.appendChild(document.createElement('br'))
+    const target = e.target;
+    const s = sendToTab({action, text: target.value})
 })

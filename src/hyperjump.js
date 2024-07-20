@@ -1,10 +1,24 @@
 let candidate = null;
+
+const fuzzySearch = (text, query) => {
+    const textLower = text.toLowerCase()
+    const queryLower = query.toLowerCase()
+    let index = 0
+    for (let i = 0; i < queryLower.length; i++) {
+        const c = queryLower[i]
+        index = textLower.indexOf(c, index)
+        if (index === -1) {
+            return -1
+        }
+    }
+    return index
+}
 const find = (text) => {
     const anchors = Array.from(document.querySelectorAll('a'))
         .map((a) => {
             return {
                 node: a,
-                index: a.innerText.toLowerCase().indexOf(text.toLowerCase())
+                index: fuzzySearch(a.innerText, text)
             }
         })
         .filter((a) => a.index !== -1)
@@ -27,7 +41,7 @@ const find = (text) => {
     return anchors
 }
 
-function handleMessage(request, sender, sendResponse) {
+function handleMessage(request, sender, sendResponse){
     console.log("Message from the background script:");
     console.log(request);
     if (request.action === 'filter') {
@@ -37,6 +51,7 @@ function handleMessage(request, sender, sendResponse) {
             candidate.click()
         }
     }
+
     sendResponse({response: "Response from content script"});
 }
 

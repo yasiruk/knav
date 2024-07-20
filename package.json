@@ -7,6 +7,7 @@
     "web-ext": "^6.0.0"
   },
   "scripts": {
-    "run": "cd src && web-ext run"
+    "run": "node webext.js",
+    "build": "cd src && rm -rf web-ext-artifacts; web-ext build"
   }
 }
